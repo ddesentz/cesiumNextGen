@@ -20,6 +20,7 @@ dependencies {
     compile 'org.slf4j:slf4j-api:1.7.21'
     compile 'ch.qos.logback:logback-classic:1.1.7'
     compile 'io.vertx:vertx-core:3.2.1'
+    compile 'io.vertx:vertx-web:3.2.1'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
