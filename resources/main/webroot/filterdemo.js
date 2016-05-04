@@ -4,12 +4,12 @@ var scene = viewer.scene;
 var initPos = Cesium.Cartesian3.fromDegrees(-75.62898254394531, 40.02804946899414, 1700);
 var initRot = Cesium.Transforms.eastNorthUpToFixedFrame(initPos);
 
-var ownShip = createPlaneAt(initPos, initRot)
+var ownShip = createPlaneAt(initPos, initRot);
 
 viewer.extend(Cesium.viewerCesiumInspectorMixin);
 viewer.trackedEntity = ownShip;
 
-connectEventBus('http://localhost:8999/visualization', ownShip)
+connectEventBus('http://localhost:8999/visualization', ownShip);
 
 function createPlaneAt(pos, rot) {
     return viewer.entities.add({
