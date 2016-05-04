@@ -1,17 +1,16 @@
 package services.visualization
 
 import io.vertx.core.Vertx
-import io.vertx.core.json.JsonArray
-import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.RoutingContext
 import io.vertx.ext.web.handler.sockjs.BridgeOptions
 import io.vertx.ext.web.handler.sockjs.PermittedOptions
 import io.vertx.ext.web.handler.sockjs.SockJSHandler
-import kotlin.concurrent.thread
+
+val TOPIC_NAMES = arrayOf("pose-ownship", "pose-ownship-truth")
 
 fun visualizationService(vertx: Vertx, route: RoutingContext) {
     var options = BridgeOptions()
-            .addOutboundPermitted(PermittedOptions().setAddress("pose-ownship"))
+    TOPIC_NAMES.forEach { options.addOutboundPermitted(PermittedOptions().setAddress(it)) }
 
     var handler = SockJSHandler
             .create(vertx)
