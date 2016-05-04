@@ -3,4 +3,5 @@ build/*
 .idea/*
 .gradle/*
 jars/*
+.vertx/*
 resources/main/webroot/cesium/*
