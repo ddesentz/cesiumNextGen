@@ -1,7 +1,7 @@
+import datasources.dummy.DummyVerticle
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.StaticHandler
-import lcm.startLCM
 import services.cableconfig.cableConfigService
 import services.visualization.visualizationService
 
@@ -23,6 +23,6 @@ fun main(args: Array<String>) {
             .requestHandler { router.accept(it) }
             .listen(PORT)
 
-    startLCM(vertx)
+    DummyVerticle().deploy(vertx)
 
 }
