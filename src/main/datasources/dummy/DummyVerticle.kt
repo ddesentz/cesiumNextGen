@@ -1,9 +1,11 @@
 package datasources.dummy
 
 import datasources.base.DeployableVerticle
+import golem.util.logging.*
 import io.vertx.core.Vertx
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
+import org.slf4j.event.Level
 import kotlin.concurrent.timer
 
 class DummyVerticle : DeployableVerticle() {
@@ -14,7 +16,7 @@ class DummyVerticle : DeployableVerticle() {
     }
 
     override fun start() {
-        println("Dummy running on thread ${Thread.currentThread().name}")
+        this.log(Level.DEBUG) {"Dummy running on thread ${Thread.currentThread().name}"}
         var movement = 0.0
         var error = 0.0
         var offset = .000001
@@ -35,6 +37,8 @@ class DummyVerticle : DeployableVerticle() {
 
             movement += .00001
             error += .00000001
+
+            this.log(Level.DEBUG) {"Dummy dumping to bus: $updateEst\n,\n$updateTruth"}
 
             vertx.eventBus().publish("pose-ownship", updateEst)
             vertx.eventBus().publish("pose-ownship-truth", updateTruth)

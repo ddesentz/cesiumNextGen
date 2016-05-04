@@ -10,6 +10,8 @@ apply from: 'buildscripts/fatjar.gradle'
 
 repositories {
     mavenCentral()
+    repositories { maven { url "http://dl.bintray.com/kyonifer/maven" } }
+
 }
 
 mainClassName = "MainKt"
@@ -17,13 +19,14 @@ mainClassName = "MainKt"
 dependencies {
     // Depend on the std libs of all our languages
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    compile 'org.slf4j:slf4j-api:1.7.21'
-    compile 'ch.qos.logback:logback-classic:1.1.7'
+    compile 'golem:golem-logging:0.5'
     compile 'io.vertx:vertx-core:3.2.1'
     compile 'io.vertx:vertx-web:3.2.1'
 
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
+
+
 }
 
 
