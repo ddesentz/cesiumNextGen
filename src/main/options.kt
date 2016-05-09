@@ -35,6 +35,10 @@ object Options {
                description = "The data source, one of 'Dummy', 'LCMSocket:<URL>', or 'LCMFile:<filename>'")
     var dataHandler: AbstractVerticle = DummyVerticle()
 
+    @Parameter(names = arrayOf("-sfolder", "--staticfolder"),
+               description = "The folder which static files are located (relative to classpath)")
+    var staticFolder  = "webroot"
+
     fun parse(args: Array<String>): Boolean {
         try {
 

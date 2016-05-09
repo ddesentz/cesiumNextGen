@@ -16,7 +16,7 @@ fun main(args: Array<String>) {
     var router = Router.router(vertx)
     router.route(Options.configroot).handler { cableConfigService(it) }
     router.route(Options.displayroot).handler { visualizationService(vertx, it) }
-    router.route(Options.staticroot).handler(StaticHandler.create())
+    router.route(Options.staticroot).handler(StaticHandler.create(Options.staticFolder))
 
     vertx.createHttpServer()
             .requestHandler { router.accept(it) }
