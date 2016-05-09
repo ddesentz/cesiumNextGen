@@ -6,7 +6,6 @@ import com.beust.jcommander.Parameters
 import datasources.dummy.DummyVerticle
 import golem.util.logging.*
 import io.vertx.core.AbstractVerticle
-import org.slf4j.event.Level
 
 @Parameters(separators = "= :")
 object Options {
@@ -39,7 +38,9 @@ object Options {
     var dataHandler: AbstractVerticle = DummyVerticle()
 
     @Parameter(names = arrayOf("-sfolder", "--staticfolder"),
-               description = "The folder which static files are located (relative to classpath)")
+               description = "The folder which static files are located (relative to classpath). " +
+                             "Note that if the jar contains files in webroot/ that may be preferred over other " +
+                             "locations, so use a different folder name for custom static files.")
     var staticFolder = "webroot"
 
     fun parse(args: Array<String>): Boolean {
@@ -61,6 +62,7 @@ object Options {
         }
         return true
     }
+
     private fun trimmedUsage(cmdr: JCommander = JCommander(Options)) {
         var output = StringBuilder()
         cmdr.setProgramName("java -jar <jar file>")
@@ -73,6 +75,6 @@ object Options {
               file sources:    --datasource=LCMFile#/path/to/file#topic1,topic2")
             Default: DummyVerticle
             """.replaceIndent("       ")
-        println(output.replace(Regex("""\n.*##FILLIN##\n.*Default:.*"""), "\n"+longDescr))
+        println(output.replace(Regex("""\n.*##FILLIN##\n.*Default:.*"""), "\n" + longDescr))
     }
 }
