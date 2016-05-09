@@ -1,6 +1,6 @@
 package datasources.dummy
 
-import datasources.base.DeployableVerticle
+import datasources.base.DataSourceVerticle
 import golem.util.logging.*
 import io.vertx.core.Vertx
 import io.vertx.core.json.JsonArray
@@ -8,7 +8,7 @@ import io.vertx.core.json.JsonObject
 import org.slf4j.event.Level
 import kotlin.concurrent.timer
 
-class DummyVerticle : DeployableVerticle() {
+class DummyVerticle : DataSourceVerticle() {
     // Don't need a separate thread since timer is async.
     override fun deploy(vertx: Vertx, isWorker: Boolean) {
         this.start()
