@@ -15,15 +15,15 @@ object Options {
 
     @Parameter(names = arrayOf("-croot", "--configroot"),
                description = "Relative URL where configuration REST service exists")
-    var configroot = "/config*"
+    var configRoot = "/config*"
 
     @Parameter(names = arrayOf("-droot", "--displayroot"),
                description = "Relative URL where the visualization display service exists")
-    var displayroot = "/visualization/*"
+    var displayRoot = "/visualization/*"
 
     @Parameter(names = arrayOf("-sroot", "--staticroot"),
                description = "Relative URL where static HTML pages are served from")
-    var staticroot = "/*"
+    var staticRoot = "/*"
 
     @Parameter(names = arrayOf("-h", "--help"),
                help = true,
