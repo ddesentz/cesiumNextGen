@@ -47,7 +47,8 @@ object Options {
         } catch(e: ParameterException) {
             // Output a debug log in case this is being run in a batch.
             this.log(Level.DEBUG) {e.message ?: "Error parsing arguments: ${e.stackTrace}"}
-            println("${e.message}. Try -h or --help for usage information.")
+            println("${e.message}.")
+            JCommander(Options).usage()
             return false
         }
         return true

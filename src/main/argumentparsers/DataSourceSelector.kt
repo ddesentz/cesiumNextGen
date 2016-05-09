@@ -11,8 +11,7 @@ class DataSourceSelector : IStringConverter<AbstractVerticle> {
         return value.run {
             when {
                 equals("Dummy")         -> {DummyVerticle()}
-                startsWith("LCMSocket") -> {LCMVerticle(this)}
-                startsWith("LCMURL")    -> {LCMVerticle(this)}
+                startsWith("LCM")       -> {LCMVerticle(this)}
                 else                    -> {throw ParameterException("Unknown data source name")}
             }
         }
