@@ -23,9 +23,10 @@ dependencies {
     compile 'io.vertx:vertx-core:3.2.1'
     compile 'io.vertx:vertx-web:3.2.1'
 
+    compile files(findLCM(["jars/lcm.jar", "/usr/share/java/lcm.jar", "/opt/share/java/lcm.jar"]))
+
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
-
 
 }
 
@@ -46,3 +47,16 @@ buildscript {
 
 // Configure fatJar exclusions
 project.ext.fatExcludes = ["native", "jblas"]
+
+String findLCM(paths) {
+    def lcm = paths.find {
+        if (file(it).exists()) {
+            return true
+        }
+        return false
+    }
+    if (lcm == null)
+        throw new Exception("Can't find LCM jar-- please supply to build.gradle or put in jars/*")
+    else
+        return lcm
+}
