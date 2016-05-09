@@ -25,7 +25,8 @@ dependencies {
     compile 'io.vertx:vertx-core:3.2.1'
     compile 'io.vertx:vertx-web:3.2.1'
 
-    compile files(findLCM(["jars/lcm.jar", "/usr/share/java/lcm.jar", "/opt/share/java/lcm.jar"]))
+    compile files(findJar("lcm.jar", ["jars/", "/usr/share/java/", "/opt/share/java/"]))
+    compile files(findJar("aspn-messages-lcm.jar", ["jars/"]))
 
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
@@ -50,15 +51,15 @@ buildscript {
 // Configure fatJar exclusions
 project.ext.fatExcludes = ["native", "jblas"]
 
-String findLCM(paths) {
-    def lcm = paths.find {
-        if (file(it).exists()) {
+String findJar(jarName, paths) {
+    def path = paths.find {
+        if (file(it+jarName).exists()) {
             return true
         }
         return false
     }
-    if (lcm == null)
+    if (path == null)
         throw new Exception("Can't find LCM jar-- please supply to build.gradle or put in jars/*")
     else
-        return lcm
+        return path+jarName
 }

@@ -24,5 +24,4 @@ fun main(args: Array<String>) {
 
     vertx.deployVerticle(Options.dataHandler,
                          DeploymentOptions().setWorker(true))
-
 }

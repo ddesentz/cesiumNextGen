@@ -1,5 +1,6 @@
 package datasources.lcm
 
+import datasources.lcm.messages.aspn.navigationsolution
 import golem.util.logging.*
 import io.vertx.core.AbstractVerticle
 import lcm.lcm.LCM
@@ -18,17 +19,24 @@ class LCMVerticle(var dataURI: String) : AbstractVerticle(), LCMSubscriber {
 
     override fun start() {
         var lcm: LCM
-            var (uriType, uriAddress, topics) = dataURI.split(delimiters = "#",
-                                                              limit = 3,
-                                                              ignoreCase = true)
+        var (uriType, uriAddress, topics) = dataURI.split(delimiters = "#",
+                                                          limit = 3,
+                                                          ignoreCase = true)
 
         when (uriType.toUpperCase()) {
             "LCMSOCKET" -> {
                 lcm = LCM(uriAddress)
-                log(Level.DEBUG) {"LCM listening on $uriAddress"}
+                log { "LCM listening on $uriAddress" }
                 topics.split(",").forEach {
                     lcm.subscribe(it) { lcm, name, data ->
-                        log(Level.DEBUG) {"Received on $name some $data"}
+                        log { "Received on $name" }
+                        var navSoln = navigationsolution(data)
+                        log {
+                            asYaml("LCMVerticle_NavSoln",
+                                   "lat" to navSoln.latitude,
+                                   "lon" to navSoln.longitude,
+                                   "alt" to navSoln.altitude)
+                        }
                     }
                 }
             }
