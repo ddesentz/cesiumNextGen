@@ -59,7 +59,7 @@ String findJar(jarName, paths) {
         return false
     }
     if (path == null)
-        throw new Exception("Can't find LCM jar-- please supply to build.gradle or put in jars/*")
+        throw new Exception("Can't find $jarName: please supply to build.gradle or put in jars/*")
     else
         return path+jarName
 }
