@@ -61,8 +61,8 @@ class LCMVerticle(var dataURI: String) : AbstractVerticle(), LCMSubscriber {
     private fun splitURI(): Triple<String, String, List<String>> {
         try {
             var (uriType, uriAddress, topics) = dataURI.split(delimiters = "#",
-                                    limit = 3,
-                                    ignoreCase = true)
+                                                              limit = 3,
+                                                              ignoreCase = true)
             return Triple(uriType, uriAddress, topics.split(","))
 
         } catch(e: IndexOutOfBoundsException) {

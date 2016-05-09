@@ -2,11 +2,13 @@ import argumentparsers.DataSourceSelector
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
+import com.beust.jcommander.Parameters
 import datasources.dummy.DummyVerticle
 import golem.util.logging.*
 import io.vertx.core.AbstractVerticle
 import org.slf4j.event.Level
 
+@Parameters(separators = "= :")
 object Options {
 
     @Parameter(names = arrayOf("-p", "--port"),
@@ -32,29 +34,45 @@ object Options {
 
     @Parameter(names = arrayOf("-dsource", "--datasource"),
                converter = DataSourceSelector::class,
-               description = "The data source, one of 'Dummy', 'LCMSocket:<URL>', or 'LCMFile:<filename>'")
+               description = "##FILLIN##") // Template filled in below due to compile time limitations
+
     var dataHandler: AbstractVerticle = DummyVerticle()
 
     @Parameter(names = arrayOf("-sfolder", "--staticfolder"),
                description = "The folder which static files are located (relative to classpath)")
-    var staticFolder  = "webroot"
+    var staticFolder = "webroot"
 
     fun parse(args: Array<String>): Boolean {
         try {
 
             val commander = JCommander(Options, *args)
-            commander.setProgramName("java -jar <jar file>")
             if (Options.help) {
-                commander.usage()
+                trimmedUsage(commander)
                 return false
             }
         } catch(e: ParameterException) {
             // Output a debug log in case this is being run in a batch.
-            this.log(Level.DEBUG) {e.message ?: "Error parsing arguments: ${e.stackTrace}"}
+            this.log { e.message ?: "Error parsing arguments: ${e.stackTrace}" }
             println("${e.message}.")
-            JCommander(Options).usage()
+            trimmedUsage()
+
+
             return false
         }
         return true
+    }
+    private fun trimmedUsage(cmdr: JCommander = JCommander(Options)) {
+        var output = StringBuilder()
+        cmdr.setProgramName("java -jar <jar file>")
+        cmdr.usage(output)
+        var longDescr = """
+            Specify the data source. By default, the server will
+            serve fake data generated internally. To use an LCM
+            source, specify a URI that is of the form:
+              network sources: --datasource=LCMSocket#tcpq://my_lcm_url#topic1,topic2
+              file sources:    --datasource=LCMFile#/path/to/file#topic1,topic2")
+            Default: DummyVerticle
+            """.replaceIndent("       ")
+        println(output.replace(Regex("""\n.*##FILLIN##\n.*Default:.*"""), "\n"+longDescr))
     }
 }
