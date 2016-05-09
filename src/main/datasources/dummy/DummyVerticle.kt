@@ -1,20 +1,13 @@
 package datasources.dummy
 
-import datasources.base.DataSourceVerticle
 import golem.util.logging.*
-import io.vertx.core.Vertx
+import io.vertx.core.AbstractVerticle
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import org.slf4j.event.Level
 import kotlin.concurrent.timer
 
-class DummyVerticle : DataSourceVerticle() {
-    // Don't need a separate thread since timer is async.
-    override fun deploy(vertx: Vertx, isWorker: Boolean) {
-        this.start()
-        this.vertx = vertx
-    }
-
+class DummyVerticle : AbstractVerticle() {
     override fun start() {
         this.log(Level.DEBUG) { "Dummy running on thread ${Thread.currentThread().name}" }
         var movement = 0.0
@@ -44,5 +37,4 @@ class DummyVerticle : DataSourceVerticle() {
             vertx.eventBus().publish("pose-ownship-truth", updateTruth)
         }
     }
-
 }

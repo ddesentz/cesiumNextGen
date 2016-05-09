@@ -2,10 +2,9 @@ import argumentparsers.DataSourceSelector
 import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
-import datasources.base.DataSourceVerticle
 import datasources.dummy.DummyVerticle
 import golem.util.logging.*
-import io.vertx.core.Vertx
+import io.vertx.core.AbstractVerticle
 import org.slf4j.event.Level
 
 object Options {
@@ -34,7 +33,7 @@ object Options {
     @Parameter(names = arrayOf("-dsource", "--datasource"),
                converter = DataSourceSelector::class,
                description = "The data source, one of 'Dummy', 'LCMSocket:<URL>', or 'LCMFile:<filename>'")
-    var dataHandler:DataSourceVerticle = DummyVerticle()
+    var dataHandler: AbstractVerticle = DummyVerticle()
 
     fun parse(args: Array<String>): Boolean {
         try {

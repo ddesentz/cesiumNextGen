@@ -1,3 +1,4 @@
+import io.vertx.core.DeploymentOptions
 import io.vertx.core.Vertx
 import io.vertx.ext.web.Router
 import io.vertx.ext.web.handler.StaticHandler
@@ -21,6 +22,7 @@ fun main(args: Array<String>) {
             .requestHandler { router.accept(it) }
             .listen(Options.port)
 
-    Options.dataHandler.deploy(vertx)
+    vertx.deployVerticle(Options.dataHandler,
+                         DeploymentOptions().setWorker(true))
 
 }
