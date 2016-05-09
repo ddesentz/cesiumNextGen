@@ -9,11 +9,7 @@ import lcm.lcm.LCMSubscriber
 import org.slf4j.event.Level
 
 
-class LCMVerticle(var dataURI: String) : AbstractVerticle(), LCMSubscriber {
-
-    override fun messageReceived(lcmInstance: LCM, channel: String, dis: LCMDataInputStream) {
-        this.log { "LCM receiving on thread ${Thread.currentThread().name}" }
-    }
+class LCMVerticle(var dataURI: String) : AbstractVerticle() {
 
     override fun start() {
 
