@@ -10,5 +10,8 @@ task fatJar(type: Jar) {
                 .collect { println(it); it.isDirectory() ? it : zipTree(it) }
     }
     with jar
+    manifest {
+        attributes 'Main-Class': 'MainKt'
+    }
 }
 
