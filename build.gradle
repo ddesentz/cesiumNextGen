@@ -25,7 +25,7 @@ dependencies {
     compile 'io.vertx:vertx-core:3.2.1'
     compile 'io.vertx:vertx-web:3.2.1'
 
-    compile files(findJar("lcm.jar", ["jars/", "/usr/share/java/", "/opt/share/java/"]))
+    compile files(findJar("lcm.jar", ["jars/", "/usr/share/java/", "/opt/share/java/", "/usr/local/share/java/"]))
     compile files(findJar("aspn-messages-lcm.jar", ["jars/"]))
 
     testCompile 'junit:junit:4.12'
