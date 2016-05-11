@@ -1,14 +1,13 @@
 package datasources.lcm
 
+import Options
 import datasources.base.DataSourceVerticle
 import datasources.lcm.messages.aspn.navigationsolution
 import golem.util.logging.*
-import io.vertx.core.AbstractVerticle
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import lcm.lcm.LCM
 import org.slf4j.event.Level
-import java.util.*
 
 
 class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
@@ -37,6 +36,8 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
             }
         }
 
+        listenWebSocket(topics, Options.cesiumTopic)
+
         log { "Running on thread ${Thread.currentThread().name}" }
     }
 
@@ -45,13 +46,16 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
         lcm.close()
     }
 
+
+
+
     /**
      * Listens to the socket defined by the LCM address [uriAddress] on the topics in
      * [topics].
      */
     private fun listenLCMSocket(topics: List<String>, uriAddress: String): LCM {
         var lcm = LCM(uriAddress)
-        log { "Listening on $uriAddress" }
+        log { "Listening on ${if (uriAddress == "") "<lcm default topic ()>" else uriAddress}" }
         topics.forEach {
             lcm.subscribe(it) { lcm, name, data ->
                 log { "Received on $name" }
@@ -62,12 +66,12 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
                            "lon" to navSoln.longitude,
                            "alt" to navSoln.altitude)
                 }
-
                 var out = navSolToJson(navSoln)
                 this.log(Level.DEBUG) { "Dumping to event-bus: $it" }
                 vertx.eventBus().publish(it, out)
             }
         }
+
         return lcm
     }
 

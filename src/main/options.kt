@@ -11,9 +11,10 @@ import io.vertx.core.AbstractVerticle
 @Parameters(separators = "= :")
 object Options {
 
-    var configRoot = "/rest/config*"
-    var statusRoot = "/rest/status/*"
-    var displayRoot = "/services/visualize/*"
+    val cesiumTopic = "cesium_topics"
+    val configRoot = "/rest/config*"
+    val statusRoot = "/rest/status/*"
+    val displayRoot = "/services/visualize/*"
 
     @Parameter(names = arrayOf("-p", "--port"),
                description = "Port to listen on")

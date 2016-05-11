@@ -11,6 +11,8 @@ fun visualizationService(vertx: Vertx, route: RoutingContext, topicList: List<St
     var options = BridgeOptions()
     ::visualizationService.log { "Giving outbound eventbus permissions for $topicList" }
     topicList.forEach { options.addOutboundPermitted(PermittedOptions().setAddress(it)) }
+    ::visualizationService.log { "Giving inbound eventbus permissions for ${Options.cesiumTopic}" }
+    options.addInboundPermitted(PermittedOptions().setAddress(Options.cesiumTopic))
 
     var handler = SockJSHandler
             .create(vertx)

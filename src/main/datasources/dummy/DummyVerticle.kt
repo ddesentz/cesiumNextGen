@@ -36,8 +36,11 @@ class DummyVerticle : DataSourceVerticle() {
 
             this.log(Level.DEBUG) { "Dummy dumping to bus (on topics ${topics}): $updateEst\n,\n$updateTruth" }
 
+            listenWebSocket(topics, Options.cesiumTopic)
+
             vertx.eventBus().publish("pose-ownship", updateEst)
             vertx.eventBus().publish("pose-ownship-truth", updateTruth)
         }
     }
+
 }
