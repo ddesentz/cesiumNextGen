@@ -1,7 +1,7 @@
 var INIT_POS = Cesium.Cartesian3.fromRadians(-1.4669223582307533, 0.6949654640951038, 2000);
 var INIT_ROT = Cesium.Transforms.eastNorthUpToFixedFrame(INIT_POS);
-var AIR_MODEL = '../cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf'
-var EBUS_URL = 'http://localhost:8999/services/visualize'
+var AIR_MODEL = '../cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf';
+var EBUS_URL = 'http://localhost:8999/services/visualize';
 
 var viewer = new Cesium.Viewer('cesiumContainer');
 var scene = viewer.scene;
