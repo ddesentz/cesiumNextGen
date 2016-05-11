@@ -8,7 +8,7 @@ var initRot = Cesium.Transforms.eastNorthUpToFixedFrame(initPos);
 var estPos = createPlaneAt(initPos, initRot);
 var truePos = createPlaneAt(initPos, initRot);
 
-var bus = connectEventBus('http://localhost:8999/visualization');
+var bus = connectEventBus('http://localhost:8999/services/visualize');
 var bus_handlers = [function () {connectPlaneToBus(bus, truePos, "pose-ownship-truth");},
                     function () {connectPlaneToBus(bus, estPos, "pose-ownship");}];
 
@@ -20,7 +20,7 @@ function createPlaneAt(pos, rot) {
     return viewer.entities.add({
         position: initPos,
         model: {
-            uri: 'cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf',
+            uri: '../cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf',
             minimumPixelSize: 16,
             scale: 1,
             orientation: initRot

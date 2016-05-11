@@ -10,21 +10,13 @@ import io.vertx.core.AbstractVerticle
 @Parameters(separators = "= :")
 object Options {
 
+    var configRoot = "/rest/config*"
+    var statusRoot = "/rest/status/*"
+    var displayRoot = "/services/visualize/*"
+
     @Parameter(names = arrayOf("-p", "--port"),
                description = "Port to listen on")
     var port = 8999
-
-    @Parameter(names = arrayOf("-croot", "--configroot"),
-               description = "Relative URL where configuration REST service exists")
-    var configRoot = "/config*"
-
-    @Parameter(names = arrayOf("-droot", "--displayroot"),
-               description = "Relative URL where the visualization display service exists")
-    var displayRoot = "/visualization/*"
-
-    @Parameter(names = arrayOf("-sroot", "--staticroot"),
-               description = "Relative URL where static HTML pages are served from")
-    var staticRoot = "/*"
 
     @Parameter(names = arrayOf("-h", "--help"),
                help = true,
