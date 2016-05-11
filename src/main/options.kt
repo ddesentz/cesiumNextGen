@@ -3,6 +3,7 @@ import com.beust.jcommander.JCommander
 import com.beust.jcommander.Parameter
 import com.beust.jcommander.ParameterException
 import com.beust.jcommander.Parameters
+import datasources.base.DataSourceVerticle
 import datasources.dummy.DummyVerticle
 import golem.util.logging.*
 import io.vertx.core.AbstractVerticle
@@ -27,7 +28,7 @@ object Options {
                converter = DataSourceSelector::class,
                description = "##FILLIN##") // Template filled in below due to compile time limitations
 
-    var dataHandler: AbstractVerticle = DummyVerticle()
+    var dataHandler: DataSourceVerticle = DummyVerticle()
 
     @Parameter(names = arrayOf("-sfolder", "--staticfolder"),
                description = "The folder which static files are located (relative to classpath). " +

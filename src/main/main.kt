@@ -17,9 +17,11 @@ fun main(args: Array<String>) {
 
     var staticHandler = StaticHandler.create().setDirectoryListing(true)
 
+    var topics = Options.dataHandler.topics
+
     router.route(Options.configRoot).handler { cableConfigService(it) }
     router.route(Options.statusRoot).handler { cableStatusService(it) }
-    router.route(Options.displayRoot).handler { visualizationService(vertx, it) }
+    router.route(Options.displayRoot).handler { visualizationService(vertx, it, topics) }
     router.route("/*").handler(staticHandler)
 
     vertx.createHttpServer()

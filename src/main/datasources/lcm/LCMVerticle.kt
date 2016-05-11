@@ -1,19 +1,32 @@
 package datasources.lcm
 
+import datasources.base.DataSourceVerticle
 import datasources.lcm.messages.aspn.navigationsolution
 import golem.util.logging.*
 import io.vertx.core.AbstractVerticle
+import io.vertx.core.json.JsonArray
+import io.vertx.core.json.JsonObject
 import lcm.lcm.LCM
-import lcm.lcm.LCMDataInputStream
-import lcm.lcm.LCMSubscriber
 import org.slf4j.event.Level
+import java.util.*
 
 
-class LCMVerticle(var dataURI: String) : AbstractVerticle() {
+class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
+    // Lateinit shouldnt be required due to static initializer,
+    // might be compiler bug
+    lateinit override var topics: List<String>
+    var uriType: String
+    var uriAddress: String
+
+    init {
+        var out = splitURI()
+        uriType = out.first
+        uriAddress = out.second
+        topics = out.third
+    }
 
     override fun start() {
 
-        var (uriType, uriAddress, topics) = splitURI()
 
         when (uriType.toUpperCase()) {
             "LCMSOCKET" -> {
@@ -24,7 +37,7 @@ class LCMVerticle(var dataURI: String) : AbstractVerticle() {
             }
         }
 
-        log { "LCM verticle running on thread ${Thread.currentThread().name}" }
+        log { "Running on thread ${Thread.currentThread().name}" }
     }
 
     override fun stop() {
@@ -38,20 +51,34 @@ class LCMVerticle(var dataURI: String) : AbstractVerticle() {
      */
     private fun listenLCMSocket(topics: List<String>, uriAddress: String): LCM {
         var lcm = LCM(uriAddress)
-        log { "LCM listening on $uriAddress" }
+        log { "Listening on $uriAddress" }
         topics.forEach {
             lcm.subscribe(it) { lcm, name, data ->
                 log { "Received on $name" }
                 var navSoln = navigationsolution(data)
                 log {
-                    asYaml("LCMVerticle_NavSoln",
+                    asYaml("Message content: NavSoln",
                            "lat" to navSoln.latitude,
                            "lon" to navSoln.longitude,
                            "alt" to navSoln.altitude)
                 }
+
+                var out = navSolToJson(navSoln)
+                this.log(Level.DEBUG) { "Dumping to event-bus: $it" }
+                vertx.eventBus().publish(it, out)
             }
         }
         return lcm
+    }
+
+    private fun navSolToJson(navSoln: navigationsolution): JsonObject {
+        return JsonObject()
+                .put("pos", JsonArray(arrayListOf(navSoln.latitude,
+                                                  navSoln.longitude,
+                                                  navSoln.altitude)))
+                .put("vel", JsonArray(navSoln.velocity.asList()))
+                .put("rot", JsonArray(navSoln.rotation.asList()))
+
     }
 
     private fun splitURI(): Triple<String, String, List<String>> {
