@@ -16,11 +16,11 @@ function startEventBus(url) {
         console.log("Requesting server send list of topics.");
         eb.send("cesium_topics", "req", function(err, msgs) {
             console.log("Got topic list from server.");
-            msgs.body.forEach(function(topic){
+            msgs.body.forEach(function(topic) {
                 console.log("Connecting to " + topic);
-                vehicles[vehicles.length] = createPlaneAt(INIT_POS, INIT_ROT);
+                vehicles.push(createPlaneAt(INIT_POS, INIT_ROT));
                 connectPlaneToBus(eb, vehicles[vehicles.length-1], topic);
-                viewer.trackedEntity = vehicles[vehicles.length-1]
+                viewer.trackedEntity = vehicles[vehicles.length-1];
             })
         });
     };
@@ -32,10 +32,10 @@ function connectPlaneToBus(eb, plane, msgname) {
         try {
             // Invert lon/lat to lat/lon
             var newPos = new Cesium.Cartographic(message.body.pos[1], message.body.pos[0], message.body.pos[2]);
-            updatePosition(newPos, plane)
+            updatePosition(newPos, plane);
         } catch (e) {
             console.error("Received a pose from server that didnt have pos/vel/rot correctly formatted.");
-            throw e
+            throw e;
         }
     });
 }
