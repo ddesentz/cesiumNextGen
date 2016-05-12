@@ -65,8 +65,15 @@ object Options {
             Specify the data source. By default, the server will
             serve fake data generated internally. To use an LCM
             source, specify a URI that is of the form:
-              network sources: --datasource=LCMSocket#tcpq://my_lcm_url#topic1,topic2
-              file sources:    --datasource=LCMFile#/path/to/file#topic1,topic2")
+              LCM#<lcm_url>#<topic_list>
+            Where lcm_url is the URL you'd pass to the LCM library
+            to connect to the bus and topic_list is a comma separated
+            list of topics mapped to their message type. If lcm_url
+            is empty, it will use the default LCM bus (create "LCM()").
+            For example, to start a default tcp LCM bus that listens
+            to topic1 and topic2 which have navsolution and
+            geodeticposition3d message types respectively, we'd pass
+              --datasource=LCM##topic1=navsolution,topic2=geodeticposition3d
             Default: DummyVerticle
             """.replaceIndent("       ")
         println(output.replace(Regex("""\n.*##FILLIN##\n.*Default:.*"""), "\n" + longDescr))
