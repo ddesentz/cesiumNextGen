@@ -17,31 +17,45 @@ class DummyVerticle : DeployableVerticle() {
 
     override fun start() {
         this.log(Level.DEBUG) { "Dummy running on thread ${Thread.currentThread().name}" }
-        var movement = 0.0
-        var error = 0.0
-        var offset = .000001
+        var hstep = 0.0
+        var xstep = 0.0
+        var ystep = 0.0
+        var lat = 39.7736667
+        var long = -084.1072222
+        var height = 2000
+        var rotStep = 0.0
         // Fakeout data for testing purposes
         timer(period = 1000) {
             var updateEst = JsonObject()
-                    .put("pos", JsonArray(arrayListOf(0.6949654640951038,
-                                                      -1.4669223582307533 + movement,
-                                                      2000)))
-                    .put("vel", JsonArray(arrayListOf(0.01, -0.5, 55.1)))
-                    .put("rot", JsonArray(arrayListOf(66.7, -22.2, 12321.1)))
-            var updateTruth = JsonObject()
-                    .put("pos", JsonArray(arrayListOf(0.6949654640951038 + error + offset,
-                                                      -1.4669223582307533 + movement + 2 * offset,
-                                                      2000)))
-                    .put("vel", JsonArray(arrayListOf(0.01, -0.5, 55.1)))
-                    .put("rot", JsonArray(arrayListOf(66.7, -22.2, 12321.1)))
+                    .put("pos", JsonArray(arrayListOf(lat,
+                             long + ystep,
+                            height + hstep)))
+                    .put("vel", JsonArray(arrayListOf(0.01 , -0.5, 55.1)))
+                    .put("rot", JsonArray(arrayListOf(0 + rotStep,0,0)))
 
-            movement += .00001
-            error += .00000001
+            var updateTruth = JsonObject()
+                    .put("pos", JsonArray(arrayListOf(lat + ystep,
+                            long + (2 * ystep),
+                            height - hstep)))
+                    .put("vel", JsonArray(arrayListOf(0.01, -0.5, 55.1)))
+                    .put("rot", JsonArray(arrayListOf(0,0 + rotStep,0)))
+
+            var updateExtra = JsonObject()
+                    .put("pos", JsonArray(arrayListOf(lat - ystep,
+                            long + (3 * ystep),
+                            height + (1000 * hstep))))
+                    .put("vel", JsonArray(arrayListOf(0.01, -0.5, 55.1)))
+                    .put("rot", JsonArray(arrayListOf(0,0,0 + rotStep)))
 
             this.log(Level.DEBUG) { "Dummy dumping to bus: $updateEst\n,\n$updateTruth" }
+            rotStep += .02
+            hstep += .1
+            xstep += .0001
+            ystep += .01
 
             vertx.eventBus().publish("pose-ownship", updateEst)
             vertx.eventBus().publish("pose-ownship-truth", updateTruth)
+            vertx.eventBus().publish("next", updateExtra)
         }
     }
 
