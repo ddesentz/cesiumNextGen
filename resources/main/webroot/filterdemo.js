@@ -60,7 +60,7 @@ function connectEventBus(url) {
 function connectPlaneToBus(eb,plane, msgname) {
     eb.registerHandler(msgname, function (error, message) {
         try {
-            //var origin = new Cesium.Cartesian3.fromDegrees(message.body.pos[1], message.body.pos[0], message.body.pos[2]);
+            var origin = new Cesium.Cartesian3.fromDegrees(message.body.pos[1], message.body.pos[0], message.body.pos[2]);
             var newPos = new Cesium.Cartographic(message.body.pos[1], message.body.pos[0], message.body.pos[2]);
             var newRot = new Cesium.Transforms.headingPitchRollQuaternion(origin,message.body.rot[0],message.body.rot[1],message.body.rot[2]);
             updatePosition(newPos, newRot, plane)
