@@ -21,7 +21,7 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     compile "com.beust:jcommander:1.48"
-    compile 'golem:golem-logging:0.5'
+    compile 'golem:golem:0.5'
     compile 'io.vertx:vertx-core:3.2.1'
     compile 'io.vertx:vertx-web:3.2.1'
 

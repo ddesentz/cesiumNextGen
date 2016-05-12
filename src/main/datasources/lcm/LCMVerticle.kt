@@ -4,13 +4,14 @@ import Options
 import datasources.base.DataSourceVerticle
 import datasources.lcm.messages.aspn.geodeticposition3d
 import datasources.lcm.messages.aspn.navigationsolution
+import golem.*
+import golem.matrix.*
 import golem.util.logging.*
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import lcm.lcm.LCM
 import lcm.lcm.LCMDataInputStream
 import org.slf4j.event.Level
-import kotlin.collections.MutableMap
 
 class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
     // Lateinit shouldnt be required due to static initializer,
@@ -62,10 +63,16 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
     }
 
     private fun lcmMessageToJson(topicName: String, dis: LCMDataInputStream): JsonObject {
-        return when(topicMap[topicName]) {
-            "navigationsolution"->{navSolToJson(navigationsolution(dis))}
-            "geodeticposition3d"->{geoPos3DToJson(geodeticposition3d(dis))}
-            else -> {throw IllegalArgumentException("Unknown message type for $topicName: ${topicMap[topicName]}")}
+        return when (topicMap[topicName]) {
+            "navigationsolution" -> {
+                navSolToJson(navigationsolution(dis))
+            }
+            "geodeticposition3d" -> {
+                geoPos3DToJson(geodeticposition3d(dis))
+            }
+            else                 -> {
+                throw IllegalArgumentException("Unknown message type for $topicName: ${topicMap[topicName]}")
+            }
         }
     }
 
@@ -81,7 +88,7 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
                                                   msg.longitude,
                                                   msg.altitude)))
                 .put("vel", JsonArray(msg.velocity.asList()))
-                .put("rot", JsonArray(msg.rotation.asList()))
+                .put("rot", JsonArray(rotateToCesium(msg.rotation.asList())))
     }
 
     private fun geoPos3DToJson(msg: geodeticposition3d): JsonObject {
@@ -98,7 +105,7 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
 
     }
 
-    private fun splitURI(): Triple<String, String, MutableMap<String,String>> {
+    private fun splitURI(): Triple<String, String, MutableMap<String, String>> {
         try {
             var (uriType, uriAddress, topics) = dataURI.split(delimiters = "#",
                                                               limit = 3,
@@ -106,10 +113,10 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
             var topicHash = mutableMapOf<String, String>()
             topics.split(",").forEach {
                 var keyValPair = it.split("=")
-                if (keyValPair.size==2)
-                    topicHash[keyValPair[0]]=keyValPair[1]
+                if (keyValPair.size == 2)
+                    topicHash[keyValPair[0]] = keyValPair[1]
                 else
-                    topicHash[keyValPair[0]]="navigationsolution"
+                    topicHash[keyValPair[0]] = "navigationsolution"
             }
             return Triple(uriType, uriAddress, topicHash)
 
@@ -120,4 +127,27 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
         }
     }
 
+    private fun rotateToCesium(inStream: List<Double>): List<Double> {
+        var Cnv = zeros(3,3).fill { row, col -> inStream[3*row+col] }
+        var Cbv = mat[-1,  0, 0 end
+                       0, -1, 0 end
+                       0,  0, 1]
+
+        return rotateToCesium(Cnv, Cbv).toList()
+    }
+    private fun rotateToCesium(Cnv: Matrix<Double>,
+                               Cbv: Matrix<Double>): Matrix<Double> {
+        var out = DcmToRpy(Cnv * Cbv.T)
+        out[2] -= 90*PI/180
+        println(out)
+        return out
+    }
+
+    private fun DcmToRpy(dcm: Matrix<Double>): Matrix<Double> {
+        var rpy = mat[0, 0, 0]
+        rpy[0] = atan2(dcm[2, 1], dcm[2, 2])
+        rpy[1] = asin(-1 * dcm[2, 0])
+        rpy[2] = atan2(dcm[1, 0], dcm[0, 0])
+        return rpy
+    }
 }

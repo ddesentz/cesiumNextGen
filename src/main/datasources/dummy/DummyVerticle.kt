@@ -2,7 +2,6 @@ package datasources.dummy
 
 import datasources.base.DataSourceVerticle
 import golem.util.logging.*
-import io.vertx.core.AbstractVerticle
 import io.vertx.core.json.JsonArray
 import io.vertx.core.json.JsonObject
 import org.slf4j.event.Level
@@ -23,13 +22,13 @@ class DummyVerticle : DataSourceVerticle() {
                                                       -1.4669223582307533 + movement,
                                                       2000)))
                     .put("vel", JsonArray(arrayListOf(0.01, -0.5, 55.1)))
-                    .put("rot", JsonArray(arrayListOf(66.7, -22.2, 12321.1)))
+                    .put("rot", JsonArray(arrayListOf(0.0,0.0,0.0)))
             var updateTruth = JsonObject()
                     .put("pos", JsonArray(arrayListOf(0.6949654640951038 + error + offset,
                                                       -1.4669223582307533 + movement + 2 * offset,
                                                       2000)))
                     .put("vel", JsonArray(arrayListOf(0.01, -0.5, 55.1)))
-                    .put("rot", JsonArray(arrayListOf(66.7, -22.2, 12321.1)))
+                    .put("rot", JsonArray(arrayListOf(0.0,0.0,0.0)))
 
             movement += .00001
             error += .00000001
