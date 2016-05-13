@@ -31,18 +31,18 @@ return viewer.entities.add({
 }
 
 function updateView(long,lat,scope){
-var west = long - scope;
-var south = lat - scope;
-var east = long + scope;
-var north = lat + scope;
-var newView = Cesium.Rectangle.fromDegrees(west, south, east, north);
+var west = new Cesium.Cartographic(long - scope,lat);
+var south = new Cesium.Cartographic(long,lat - scope);
+var east = new Cesium.Cartographic(long + scope,lat);
+var north = new Cesium.Cartographic(long,lat + scope);
+var arr = [west,south,east,north];
+var newView = Cesium.Rectangle.fromCartographicArray(arr);
 return newView;
 }
 
 function createViews(color){
 return viewer.entities.add({
         rectangle : {
-            coordinates : Cesium.Rectangle.fromDegrees(),
             material : color.withAlpha(0.35),
             outline : true,
             height : 2,

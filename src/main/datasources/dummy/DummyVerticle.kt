@@ -20,8 +20,8 @@ class DummyVerticle : DeployableVerticle() {
         var hstep = 0.0
         var xstep = 0.0
         var ystep = 0.0
-        var lat = 39.7736667
-        var long = -084.1072222
+        var lat = 0.6949654640951038
+        var long = -1.4669223582307533
         var height = 2000
         var rotStep = 0.0
         // Fakeout data for testing purposes
@@ -50,8 +50,7 @@ class DummyVerticle : DeployableVerticle() {
             this.log(Level.DEBUG) { "Dummy dumping to bus: $updateEst\n,\n$updateTruth" }
             rotStep += .02
             hstep += .1
-            xstep += .0001
-            ystep += .01
+            ystep += .0001
 
             vertx.eventBus().publish("pose-ownship", updateEst)
             vertx.eventBus().publish("pose-ownship-truth", updateTruth)
