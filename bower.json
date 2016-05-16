@@ -15,6 +15,7 @@
     "jquery": "^2.2.3",
     "sockjs-client": "^1.1.0",
     "vertx3-eventbus-client": "^3.2.1",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "cesium": "^1.7.1"
   }
 }
