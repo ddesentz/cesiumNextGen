@@ -8,15 +8,15 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>SmartCable Visualizer</title>
-    <link href="http://cesiumjs.org/releases/1.15/Build/Cesium/Widgets/widgets.css"
-          rel="stylesheet"/>
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    <script src="cesium/Build/Cesium/Cesium.js"></script>
+    <link rel="stylesheet" type="text/css"
+        href="vendor/Cesium/Widgets/widgets.css" />
+    <link rel="stylesheet" type="text/css"
+        href="vendor/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <script type="text/javascript" src="vendor/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="vendor/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="vendor/Cesium/Cesium.js"></script>
 
     <style>
-        @import url(cesium/Build/Cesium/Widgets/widgets.css);
         html, body, #cesiumContainer {
             width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
             font-family: sans-serif; color: #edffff;
@@ -34,10 +34,6 @@
 </head>
 <body>
 <div id="cesiumContainer"></div>
-<script src="sockjs.min.js"></script>
-<script src="vertx-eventbus.js"></script>
-<script src="aircraft.js"></script>
-<script src="filterdemo.js"></script>
 <div id="controlPanel">
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
@@ -67,6 +63,10 @@
         </div>
     </nav>
 </div>
+<script type="text/javascript" src="vendor/bower_components/sockjs-client/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="vendor/bower_components/vertx3-eventbus-client/vertx-eventbus.js"></script>
+<script type="text/javascript" src="aircraft.js"></script>
+<script type="text/javascript" src="filterdemo.js"></script>
 <script>
     function zoom(num){
     zoomTo(num)

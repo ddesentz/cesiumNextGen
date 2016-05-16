@@ -4,7 +4,7 @@ function cPlane(pos, rot, num) {
         id : num,
         position: initPos,
         model: {
-            uri: 'cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf',
+            uri: 'vendor/bower_components/cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf',
             minimumPixelSize: 16,
             scale: 1,
             orientation: initRot

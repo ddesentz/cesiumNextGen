@@ -27,7 +27,7 @@ for (var i = 0; i < planes.length; i++){
 }
 
 
-var bus = connectEventBus('http://localhost:8999/visualization');
+var bus = connectEventBus(location.href + 'visualization');
 var bus_handlers = [function () {connectPlaneToBus(bus, truePos, "pose-ownship-truth");},
                     function () {connectPlaneToBus(bus, estPos, "pose-ownship");},
                     function () {connectPlaneToBus(bus, nextPos, "next");}
