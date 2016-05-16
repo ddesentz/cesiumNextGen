@@ -6,3 +6,4 @@ jars/*
 .vertx/*
 resources/main/webroot/cesium/*
 node_modules
+resources/main/webroot/vendor

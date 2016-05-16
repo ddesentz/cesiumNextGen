@@ -28,6 +28,14 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
+task nodeImportCesium(type: Sync) {
+    from 'node_modules/cesium/Build/Cesium'
+    into 'resources/main/webroot/vendor/Cesium'
+    dependsOn bowerInstall
+}
+
+tasks.getByName('processResources').dependsOn nodeImportCesium
+
 apply from: 'buildscripts/mixedlang.gradle'
 apply from: 'buildscripts/fatjar.gradle'
 
