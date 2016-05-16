@@ -28,6 +28,17 @@ apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
 
+task bowerInstall(type: NodeTask) {
+    script = file('node_modules/bower/bin/bower')
+    args = ["--config.storage.cache=${gradle.getGradleUserHomeDir()}/caches/bower/cache",
+            "--config.storage.packages=${gradle.getGradleUserHomeDir()}/caches/bower/packages",
+            "--config.storage.registry=${gradle.getGradleUserHomeDir()}/caches/bower/registry",
+            'install']
+    inputs.files file('bower.json')
+    outputs.files file('bower_components')
+    dependsOn npmInstall
+}
+
 task nodeImportCesium(type: Sync) {
     from 'node_modules/cesium/Build/Cesium'
     into 'resources/main/webroot/vendor/Cesium'
@@ -35,6 +46,14 @@ task nodeImportCesium(type: Sync) {
 }
 
 tasks.getByName('processResources').dependsOn nodeImportCesium
+
+task bowerImport(type: Sync) {
+    from 'bower_components'
+    into 'resources/main/webroot/vendor/bower_components'
+    dependsOn bowerInstall
+}
+
+tasks.getByName('processResources').dependsOn bowerImport
 
 apply from: 'buildscripts/mixedlang.gradle'
 apply from: 'buildscripts/fatjar.gradle'
