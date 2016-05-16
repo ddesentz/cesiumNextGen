@@ -33,12 +33,11 @@ function connectPlaneToBus(eb, plane, msgname) {
         try {
             // Invert lon/lat to lat/lon
             var newPos = new Cesium.Cartographic(message.body.pos[1], message.body.pos[0], message.body.pos[2]);
-            var newRot = NaN;
-            try {
+            var newRot;
+            if (message.body.rot==undefined)
+                newRot = [0,3.1,0];
+            else
                 newRot = message.body.rot;
-            } catch(e) {
-                newRot = [0,0,0];
-            }
             updatePosition(newPos, plane);
             updateOrientation(newRot, plane);
         } catch (e) {

@@ -137,17 +137,18 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
     }
     private fun rotateToCesium(Cnv: Matrix<Double>,
                                Cbv: Matrix<Double>): Matrix<Double> {
-        var out = DcmToRpy(Cnv * Cbv.T)
+        var out = dcmToRpy( (Cnv * Cbv.T).T)
         out[2] -= 90*PI/180
         println(out)
         return out
     }
 
-    private fun DcmToRpy(dcm: Matrix<Double>): Matrix<Double> {
-        var rpy = mat[0, 0, 0]
-        rpy[0] = atan2(dcm[2, 1], dcm[2, 2])
-        rpy[1] = asin(-1 * dcm[2, 0])
-        rpy[2] = atan2(dcm[1, 0], dcm[0, 0])
+    private fun dcmToRpy(dcm: Matrix<Double>): Matrix<Double> {
+        var rpy = mat[0.0, 0.0, 0.0]
+        rpy[2] = atan2(dcm[0, 1], dcm[0, 0]);
+        rpy[1] = -asin(dcm[0, 2])
+        rpy[0] = atan2(dcm[1, 2], dcm[2, 2])
+
         return rpy
     }
 }
