@@ -1,3 +1,17 @@
+// Add kotlin support to gradle
+buildscript {
+    ext.kotlin_version = '1.0.1'
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.7"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
 group = "net.antcenter"
 version = "0.1"
 
@@ -27,21 +41,6 @@ dependencies {
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
 
-}
-
-
-// Add kotlin support to gradle
-buildscript {
-    ext.kotlin_version = '1.0.1'
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.7"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
 }
 
 // Configure fatJar exclusions
