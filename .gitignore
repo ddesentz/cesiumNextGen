@@ -5,3 +5,4 @@ build/*
 jars/*
 .vertx/*
 resources/main/webroot/cesium/*
+node_modules
