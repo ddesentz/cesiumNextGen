@@ -1,0 +1,20 @@
+{
+  "name": "smartcables-server",
+  "description": "",
+  "main": "",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "sockjs-client": "^1.1.0",
+    "vertx3-eventbus-client": "^3.2.1",
+    "bootstrap": "^3.3.6"
+  }
+}
