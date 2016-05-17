@@ -1,7 +1,7 @@
 var INIT_POS = Cesium.Cartesian3.fromRadians(-1.4669223582307533, 0.6949654640951038, 2000);
 var INIT_ROT = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(INIT_POS, 0, 1.5, 0));
-var AIR_MODEL = 'vendor/bower_components/cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf';
 var EBUS_URL = window.location.href + '/services/visualize';
+var AIR_MODEL = '../vendor/bower_components/cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf';
 
 var viewer = new Cesium.Viewer('cesiumContainer');
 var scene = viewer.scene;

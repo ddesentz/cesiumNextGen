@@ -8,9 +8,9 @@
     <!-- Make the application on mobile take up the full browser screen and disable user scaling. -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
     <title>SmartCable Vizualizer</title>
-    <script type="text/javascript" src="vendor/Cesium/Cesium.js"></script>
+    <script type="text/javascript" src="../vendor/Cesium/Cesium.js"></script>
     <style>
-        @import url(../cesium/Build/Cesium/Widgets/widgets.css);
+        @import url(../vendor/Cesium/Widgets/widgets.css);
         html, body, #cesiumContainer {
             width: 100%; height: 100%; margin: 0; padding: 0; overflow: hidden;
         }
@@ -18,8 +18,8 @@
 </head>
 <body>
 <div id="cesiumContainer">&nbsp;</div>
-<script type="text/javascript" src="vendor/bower_components/sockjs-client/dist/sockjs.min.js"></script>
-<script type="text/javascript" src="vendor/bower_components/vertx3-eventbus-client/vertx-eventbus.js"></script>
+<script type="text/javascript" src="../vendor/bower_components/sockjs-client/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="../vendor/bower_components/vertx3-eventbus-client/vertx-eventbus.js"></script>
 <script src="filterdemo.js"></script>
 </body>
 </html>
