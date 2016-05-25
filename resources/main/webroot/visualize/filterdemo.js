@@ -9,6 +9,14 @@ var vehicles = [];
 var bus = startEventBus(EBUS_URL);
 viewer.extend(Cesium.viewerCesiumInspectorMixin);
 
+var count = 0;
+var colorArray = [];
+colorArray.push(Cesium.Color.RED);
+colorArray.push(Cesium.Color.WHITE);
+colorArray.push(Cesium.Color.BLUE);
+colorArray.push(Cesium.Color.YELLOW);
+var pathCoords = [];
+var aircraftPaths = [];
 
 function startEventBus(url) {
     var eb = new EventBus(url);
@@ -19,6 +27,8 @@ function startEventBus(url) {
             msgs.body.forEach(function(topic) {
                 console.log("Connecting to " + topic);
                 vehicles.push(createPlaneAt(INIT_POS, INIT_ROT));
+                aircraftPaths.push(createPath(colorArray[count-1]));
+                pathCoords.push([]);
                 vehicles[vehicles.length-1].position = INIT_POS;
                 connectPlaneToBus(eb, vehicles[vehicles.length-1], topic);
                 viewer.trackedEntity = vehicles[vehicles.length-1];
@@ -49,7 +59,9 @@ function connectPlaneToBus(eb, plane, msgname) {
 
 function createPlaneAt(pos, rot) {
 
+    count++;
     return viewer.entities.add({
+        id : count,
         position: INIT_POS,
         orientation: INIT_ROT,
         model: {
@@ -62,8 +74,30 @@ function createPlaneAt(pos, rot) {
 
 function updatePosition(posLLH, vehicle) {
     vehicle.position = Cesium.Cartesian3.fromRadians(posLLH.longitude, posLLH.latitude, posLLH.height);
+    aircraftPaths[vehicle.id-1].polyline.positions = Cesium.Cartesian3.fromRadiansArrayHeights(
+                                                     updatePath(posLLH.longitude, posLLH.latitude, posLLH.height,vehicle.id-1));
+
 }
 
 function updateOrientation(rotMat, vehicle) {
     vehicle.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(INIT_POS, rotMat[2], rotMat[1], rotMat[0]));
+}
+
+function updatePath(long,lat,height,id){
+     var oldPath = pathCoords[id];
+     oldPath.push(long);
+     oldPath.push(lat);
+     oldPath.push(height);
+     var newPath = oldPath;
+ return newPath;
+}
+
+function createPath(color){
+ return viewer.entities.add({
+     polyline : {
+         positions : [],
+         width : 5,
+         material : color
+     }
+ });
 }
