@@ -5,3 +5,6 @@ build/*
 jars/*
 .vertx/*
 resources/main/webroot/cesium/*
+bower_components
+node_modules
+resources/main/webroot/vendor

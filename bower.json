@@ -1,0 +1,19 @@
+{
+  "name": "smartcables-server",
+  "description": "",
+  "main": "",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sockjs-client": "^1.1.0",
+    "vertx3-eventbus-client": "^3.2.1",
+    "cesium": "^1.7.1"
+  }
+}

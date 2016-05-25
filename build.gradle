@@ -1,9 +1,59 @@
+// Add kotlin support to gradle
+buildscript {
+    ext.kotlin_version = '1.0.1'
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.7"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+plugins {
+    id "com.moowork.node" version "0.12"
+}
+
+node {
+    download = true
+}
+
 group = "net.antcenter"
 version = "0.1"
+
 
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'application'
+
+task bowerInstall(type: NodeTask) {
+    script = file('node_modules/bower/bin/bower')
+    args = ["--config.storage.cache=${gradle.getGradleUserHomeDir()}/caches/bower/cache",
+            "--config.storage.packages=${gradle.getGradleUserHomeDir()}/caches/bower/packages",
+            "--config.storage.registry=${gradle.getGradleUserHomeDir()}/caches/bower/registry",
+            'install']
+    inputs.files file('bower.json')
+    outputs.files file('bower_components')
+    dependsOn npmInstall
+}
+
+task nodeImportCesium(type: Sync) {
+    from 'node_modules/cesium/Build/Cesium'
+    into 'resources/main/webroot/vendor/Cesium'
+    dependsOn bowerInstall
+}
+
+tasks.getByName('processResources').dependsOn nodeImportCesium
+
+task bowerImport(type: Sync) {
+    from 'bower_components'
+    into 'resources/main/webroot/vendor/bower_components'
+    dependsOn bowerInstall
+}
+
+tasks.getByName('processResources').dependsOn bowerImport
 
 apply from: 'buildscripts/mixedlang.gradle'
 apply from: 'buildscripts/fatjar.gradle'
@@ -31,21 +81,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile "org.jetbrains.kotlin:kotlin-test:$kotlin_version"
 
-}
-
-
-// Add kotlin support to gradle
-buildscript {
-    ext.kotlin_version = '1.0.1'
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        jcenter()
-    }
-    dependencies {
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:0.9.7"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    }
 }
 
 // Configure fatJar exclusions
