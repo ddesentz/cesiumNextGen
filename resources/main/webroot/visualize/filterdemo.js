@@ -67,3 +67,7 @@ function updatePosition(posLLH, vehicle) {
 function updateOrientation(rotMat, vehicle) {
     vehicle.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(INIT_POS, rotMat[2], rotMat[1], rotMat[0]));
 }
+
+function zoomTo(num){
+    viewer.trackedEntity = vehicles[num-1];
+}
