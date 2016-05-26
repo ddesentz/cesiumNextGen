@@ -2,6 +2,7 @@ var INIT_POS = Cesium.Cartesian3.fromRadians(-1.4669223582307533, 0.694965464095
 var INIT_ROT = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(INIT_POS, 0, 1.5, 0));
 var EBUS_URL = window.location.origin + '/services/visualize';
 var AIR_MODEL = '../vendor/bower_components/cesium/Apps/SampleData/models/CesiumAir/Cesium_Air.gltf';
+var MAX_PATH_LEN = 3600;
 
 var viewer = new Cesium.Viewer('cesiumContainer');
 var scene = viewer.scene;
@@ -97,7 +98,7 @@ function updatePath(long,lat,height,id){
     path.push(lat);
     path.push(height);
     //Set Max path length for 10mins @ 2Hz
-    if(path.length == (3600)){
+    if(path.length == (MAX_PATH_LEN)){
         var removed = path.splice(0,3);
     }
     return path;
