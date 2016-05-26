@@ -27,6 +27,10 @@ function startEventBus(url) {
             msgs.body.forEach(function(topic) {
                 console.log("Connecting to " + topic);
                 vehicles.push(createPlaneAt(INIT_POS, INIT_ROT));
+                //If more than 4 planes are created generate random colors for their paths
+                if(count > 4){
+                    colorArray.push(randomColor());
+                }
                 aircraftPaths.push(createPath(colorArray[count-1]));
                 pathCoords.push([]);
                 vehicles[vehicles.length-1].position = INIT_POS;
@@ -44,12 +48,18 @@ function connectPlaneToBus(eb, plane, msgname) {
             // Invert lon/lat to lat/lon
             var newPos = new Cesium.Cartographic(message.body.pos[1], message.body.pos[0], message.body.pos[2]);
             var newRot;
-            if (message.body.rot==undefined)
-                newRot = [0,3.1,0];
+            if (!message.body.rot){
+                plane.model.uri = undefined;
+                plane.box = {
+                                dimensions : new Cesium.Cartesian3(5.0, 5.0, 5.0),
+                                material : colorArray[count-1]
+                            };
+            }
             else
                 newRot = message.body.rot;
-            updatePosition(newPos, plane);
-            updateOrientation(newRot, plane);
+                updatePosition(newPos, plane);
+                updateOrientation(newRot, plane);
+
         } catch (e) {
             console.error("Received a pose from server that didnt have pos/vel/rot correctly formatted.");
             throw e;
@@ -74,9 +84,7 @@ function createPlaneAt(pos, rot) {
 
 function updatePosition(posLLH, vehicle) {
     vehicle.position = Cesium.Cartesian3.fromRadians(posLLH.longitude, posLLH.latitude, posLLH.height);
-    aircraftPaths[vehicle.id-1].polyline.positions = Cesium.Cartesian3.fromRadiansArrayHeights(
-                                                     updatePath(posLLH.longitude, posLLH.latitude, posLLH.height,vehicle.id-1));
-
+    aircraftPaths[vehicle.id-1].polyline.positions = Cesium.Cartesian3.fromRadiansArrayHeights(updatePath(posLLH.longitude, posLLH.latitude, posLLH.height,vehicle.id-1));
 }
 
 function updateOrientation(rotMat, vehicle) {
@@ -84,20 +92,28 @@ function updateOrientation(rotMat, vehicle) {
 }
 
 function updatePath(long,lat,height,id){
-     var oldPath = pathCoords[id];
-     oldPath.push(long);
-     oldPath.push(lat);
-     oldPath.push(height);
-     var newPath = oldPath;
- return newPath;
+    var path = pathCoords[id];
+    path.push(long);
+    path.push(lat);
+    path.push(height);
+    //Set Max path length for 10mins @ 2Hz
+    if(path.length == (3600)){
+        var removed = path.splice(0,3);
+    }
+    return path;
 }
 
 function createPath(color){
- return viewer.entities.add({
-     polyline : {
-         positions : [],
-         width : 5,
-         material : color
-     }
- });
+    return viewer.entities.add({
+    name : "Plane " + count + " Path",
+        polyline : {
+            positions : [],
+            width : 5,
+            material : color
+        }
+    });
+}
+
+function randomColor(){
+    return new Cesium.Color(Math.random(),Math.random(),Math.random(),1);
 }
