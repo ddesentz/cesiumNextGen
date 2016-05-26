@@ -128,16 +128,12 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
     }
 
     private fun rotateToCesium(inStream: List<Double>): List<Double> {
-        var Cnv = zeros(3,3).fill { row, col -> inStream[3*row+col] }
-        var Cbv = mat[-1,  0, 0 end
-                       0, -1, 0 end
-                       0,  0, 1]
+        var Cnb = zeros(3,3).fill { row, col -> inStream[3*row+col] }
 
-        return rotateToCesium(Cnv, Cbv).toList()
+        return rotateToCesium(Cnb).toList()
     }
-    private fun rotateToCesium(Cnv: Matrix<Double>,
-                               Cbv: Matrix<Double>): Matrix<Double> {
-        var out = dcmToRpy( (Cnv * Cbv.T).T)
+    private fun rotateToCesium(Cnb: Matrix<Double>): Matrix<Double> {
+        var out = dcmToRpy(Cnb.T)
         out[2] -= 90*PI/180
         println(out)
         return out
