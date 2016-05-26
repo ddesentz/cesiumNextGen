@@ -26,6 +26,7 @@ function startEventBus(url) {
             console.log("Got topic list from server.");
             msgs.body.forEach(function(topic) {
                 console.log("Connecting to " + topic);
+                count++;
                 vehicles.push(createPlaneAt(INIT_POS, INIT_ROT));
                 //If more than 4 planes are created generate random colors for their paths
                 if(count > 4){
@@ -69,7 +70,6 @@ function connectPlaneToBus(eb, plane, msgname) {
 
 function createPlaneAt(pos, rot) {
 
-    count++;
     return viewer.entities.add({
         id : count,
         position: INIT_POS,
