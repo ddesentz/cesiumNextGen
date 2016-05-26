@@ -28,7 +28,6 @@ class DummyVerticle : DataSourceVerticle() {
                                                       -1.4669223582307533 + movement + 2 * offset,
                                                       2000)))
                     .put("vel", JsonArray(arrayListOf(0.01, -0.5, 55.1)))
-                    .put("rot", JsonArray(arrayListOf(0.0,0.0,0.0)))
 
             movement += .00001
             error += .00000001
