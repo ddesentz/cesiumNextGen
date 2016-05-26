@@ -38,7 +38,7 @@ function startEventBus(url) {
                 vehicles[vehicles.length - 1].position = INIT_POS;
                 connectPlaneToBus(eb, vehicles[vehicles.length - 1], topic);
                 viewer.trackedEntity = vehicles[vehicles.length - 1];
-            })
+            });
         });
     };
     return eb;
