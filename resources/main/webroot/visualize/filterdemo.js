@@ -18,6 +18,7 @@ colorArray.push(Cesium.Color.BLUE);
 colorArray.push(Cesium.Color.YELLOW);
 var pathCoords = [];
 var aircraftPaths = [];
+var viewAllCount = 0;
 
 function startEventBus(url) {
     var eb = new EventBus(url);
@@ -57,11 +58,14 @@ function connectPlaneToBus(eb, plane, msgname) {
                     material: colorArray[count - 1]
                 };
             }
-            else
+            else {
                 newRot = message.body.rot;
+                updateOrientation(newRot, plane);
+            }
             updatePosition(newPos, plane);
-            updateOrientation(newRot, plane);
-
+            if(viewAllCount % 2 === 1){
+                viewer.zoomTo(viewer.entities);
+            }
         } catch (e) {
             console.error("Received a pose from server that didnt have pos/vel/rot correctly formatted.");
             throw e;
@@ -121,4 +125,20 @@ function randomColor() {
 
 function zoomTo(num){
     viewer.trackedEntity = vehicles[num-1];
+}
+
+function togglePath(num){
+    var path = aircraftPaths[num-1];
+    if(path.show)
+        path.show = false;
+    else
+        path.show = true;
+}
+
+function clearPath(num) {
+    pathCoords[num-1] = [];
+}
+
+function viewAll(){
+    viewAllCount++;
 }
