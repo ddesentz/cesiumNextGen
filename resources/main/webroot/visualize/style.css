@@ -1,4 +1,5 @@
-.third-level-menu {
+.third-level-menu
+{
     right: -80px;
     list-style: none;
     padding: 0;
@@ -10,22 +11,20 @@
     height: 100%;
     width: 100%;
 }
-
-.third-level-menu > li {
+.third-level-menu > li
+{
     text-align: center;
     border: 2px solid #444444;
     box-shadow: 5px 5px 5px #444444;
-    background: #0040ff;
+    background: #b3b3b3;
 }
+.third-level-menu > li:hover { background: #cccccc;}
 
-.third-level-menu > li:hover {
-    background: #3366ff;
-}
-
-.second-level-menu {
+.second-level-menu
+{
     position: absolute;
-    top: 30px;
-    left: 0;
+    top: 5px;
+    right: -85px;
     width: 150px;
     list-style: none;
     padding: 0;
@@ -33,20 +32,19 @@
     display: none;
 }
 
-.second-level-menu > li {
+.second-level-menu > li
+{
     position: relative;
     text-align: center;
     margin-left: 65px;
     border: 2px solid #444444;
     box-shadow: 5px 5px 5px #444444;
-    background: #0040ff;
+    background: #b3b3b3;
 }
+.second-level-menu > li:hover { background: #cccccc; }
 
-.second-level-menu > li:hover {
-    background: #3366ff;
-}
-
-.top-level-menu {
+.top-level-menu
+{
     list-style: none;
     padding: 0;
     margin: 0;
@@ -59,32 +57,28 @@
     float: left;
 }
 
-.top-level-menu > li {
+.top-level-menu > li
+{
     position: relative;
     text-align: center;
     border: 2px solid #444444;
     box-shadow: 5px 5px 5px #444444;
-    background: #0040ff;
+    background: #b3b3b3;
 }
+.top-level-menu > li:hover { background: #cccccc; }
 
-.top-level-menu > li:hover {
-    background: #3366ff;
-}
-
-.top-level-menu li:hover > ul {
+.top-level-menu li:hover > ul
+{
     display: inline;
 }
 
-.top-level-menu a {
+.top-level-menu a
+{
     font: bold 14px Arial, Helvetica, sans-serif;
     color: #FFFFFF;
     text-decoration: none;
-    padding: 3px;
+    padding: 2.5px;
     display: block;
     line-height: 30px;
 }
-
-.top-level-menu a:hover {
-    color: #000000;
-}
-
+.top-level-menu a:hover { color: #000000; }
