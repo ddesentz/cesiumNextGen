@@ -24,7 +24,7 @@
 
         #controlPanel {
             position: absolute;
-            top: 0px;
+            top: 35%;
             left: 0px;
             background: rgba(42, 42, 42, 0.0);
             border-radius: 5px;
@@ -39,32 +39,46 @@
 <div id="controlPanel">
     <ul class="top-level-menu">
         <li>
-            <a href="#">Aircraft Views</a>
+            <a href="#" onclick="viewAll()">Aircraft Views</a>
             <ul class="second-level-menu">
                 <li><a href="#">Aircraft 1</a>
                     <ul class="third-level-menu">
                         <li><a href="#" onclick="zoomTo(1)">Plane View</a></li>
-
                     </ul>
                 </li>
                 <li><a href="#">Aircraft 2</a>
                     <ul class="third-level-menu">
                         <li><a href="#" onclick="zoomTo(2)">Plane View</a></li>
-
                     </ul>
                 </li>
                 <li><a href="#">Aircraft 3</a>
                     <ul class="third-level-menu">
                         <li><a href="#" onclick="zoomTo(3)">Plane View</a></li>
-
                     </ul>
                 </li>
                 <li><a href="#">Aircraft 4</a>
                     <ul class="third-level-menu">
                         <li><a href="#" onclick="zoomTo(4)">Plane View</a></li>
-
                     </ul>
                 </li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" >Toggle Plane Paths</a>
+            <ul class="second-level-menu">
+                <li><a href="#" onclick="togglePath(1)">Aircraft 1</a></li>
+                <li><a href="#" onclick="togglePath(2)">Aircraft 2</a></li>
+                <li><a href="#" onclick="togglePath(3)">Aircraft 3</a></li>
+                <li><a href="#" onclick="togglePath(4)">Aircraft 4</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="#" >Clear Plane Paths</a>
+            <ul class="second-level-menu">
+                <li><a href="#" onclick="clearPath(1)">Aircraft 1</a></li>
+                <li><a href="#" onclick="clearPath(2)">Aircraft 2</a></li>
+                <li><a href="#" onclick="clearPath(3)">Aircraft 3</a></li>
+                <li><a href="#" onclick="clearPath(4)">Aircraft 4</a></li>
             </ul>
         </li>
     </ul>
