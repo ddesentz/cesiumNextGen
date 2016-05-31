@@ -55,7 +55,7 @@ function connectPlaneToBus(eb, plane, msgname) {
                 plane.model.uri = undefined;
                 plane.box = {
                     dimensions: new Cesium.Cartesian3(5.0, 5.0, 5.0),
-                    material: colorArray[count - 1]
+                    material: colorArray[plane.id - 1]
                 };
             }
             else {
