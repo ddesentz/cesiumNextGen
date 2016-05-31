@@ -52,7 +52,6 @@
     margin: 0;
     content: '';
     position: absolute;
-    padding-top: 0px;
     top: 0;
     left: 0;
     height: 100%;
@@ -80,7 +79,7 @@
     font: bold 14px Arial, Helvetica, sans-serif;
     color: #FFFFFF;
     text-decoration: none;
-    padding: 2.5px;
+    padding: 3px;
     display: block;
     line-height: 30px;
 }
