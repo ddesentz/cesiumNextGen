@@ -46,7 +46,7 @@ html, body, #cesiumContainer {
 {
     position: absolute;
     top: 5px;
-    right: -85px;
+    left: 100%;
     width: 150px;
     list-style: none;
     padding: 0;
@@ -58,7 +58,7 @@ html, body, #cesiumContainer {
 {
     position: relative;
     text-align: center;
-    margin-left: 65px;
+    margin: 0; padding: 0;
     border: 2px solid #444444;
     box-shadow: 5px 5px 5px #444444;
     background: #b3b3b3;
@@ -103,7 +103,7 @@ html, body, #cesiumContainer {
     display: block;
     line-height: 30px;
 }
-.top-level-menu a:hover { color: #000000; }
+.top-level-menu li:hover > a { color: #000000; }
 
 .onoffswitch {
     position: relative; width: 75px;
