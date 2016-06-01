@@ -125,6 +125,9 @@ function randomColor() {
 
 function zoomTo(num){
     viewer.trackedEntity = vehicles[num-1];
+    if(viewAllCount%2==1){
+        viewAllCount++;
+    }
 }
 
 function togglePath(num){
