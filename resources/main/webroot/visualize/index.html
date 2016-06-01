@@ -11,78 +11,123 @@
     <title>SmartCable Vizualizer</title>
     <script type="text/javascript" src="../vendor/Cesium/Cesium.js"></script>
     <link rel="stylesheet" href="style.css">
-    <style>
-        @import url(../vendor/Cesium/Widgets/widgets.css);
-
-        html, body, #cesiumContainer {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        #controlPanel {
-            position: absolute;
-            top: 35%;
-            left: 0px;
-            background: rgba(42, 42, 42, 0.0);
-            border-radius: 5px;
-        }
-    </style>
 </head>
 <body>
 <div id="cesiumContainer"></div>
 <script type="text/javascript" src="../vendor/bower_components/sockjs-client/dist/sockjs.min.js"></script>
 <script type="text/javascript" src="../vendor/bower_components/vertx3-eventbus-client/vertx-eventbus.js"></script>
 <script src="filterdemo.js"></script>
-<div id="controlPanel">
+<div class="controlPanel">
     <ul class="top-level-menu">
-        <li>
-            <a href="#" onclick="viewAll()">Aircraft Views</a>
+        <li id="overhead">
+            <a id="overheadText" href="#overhead" onclick="viewAll();">Overhead View</a>
+        </li>
+        <li id="av">
+            <a>Aircraft Views</a>
             <ul class="second-level-menu">
-                <li><a href="#">Aircraft 1</a>
+                <li><a>Aircraft 1</a>
                     <ul class="third-level-menu">
-                        <li><a href="#" onclick="zoomTo(1)">Plane View</a></li>
+                        <li id="a1pv"><a href="#a1pv" onclick="zoomTo(1)">Plane View</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Aircraft 2</a>
+                <li><a>Aircraft 2</a>
                     <ul class="third-level-menu">
-                        <li><a href="#" onclick="zoomTo(2)">Plane View</a></li>
+                        <li id="a2pv"><a href="#a2pv" onclick="zoomTo(2)">Plane View</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Aircraft 3</a>
+                <li><a>Aircraft 3</a>
                     <ul class="third-level-menu">
-                        <li><a href="#" onclick="zoomTo(3)">Plane View</a></li>
+                        <li id="a3pv"><a href="#a3pv" onclick="zoomTo(3)">Plane View</a></li>
                     </ul>
                 </li>
-                <li><a href="#">Aircraft 4</a>
+                <li><a>Aircraft 4</a>
                     <ul class="third-level-menu">
-                        <li><a href="#" onclick="zoomTo(4)">Plane View</a></li>
+                        <li id="a4pv"><a href="#a4pv" onclick="zoomTo(4)">Plane View</a></li>
                     </ul>
                 </li>
             </ul>
         </li>
-        <li>
-            <a href="#" >Toggle Plane Paths</a>
+        <li id="tp">
+            <a>Toggle Plane Paths</a>
             <ul class="second-level-menu">
-                <li><a href="#" onclick="togglePath(1)">Aircraft 1</a></li>
-                <li><a href="#" onclick="togglePath(2)">Aircraft 2</a></li>
-                <li><a href="#" onclick="togglePath(3)">Aircraft 3</a></li>
-                <li><a href="#" onclick="togglePath(4)">Aircraft 4</a></li>
+                <li class="onoffswitch" > Aircraft 1
+                    <input onclick="togglePath(1)" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch1" checked>
+                    <label class="onoffswitch-label" for="myonoffswitch1">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </li>
+                <li class="onoffswitch" > Aircraft 2
+                    <input onclick="togglePath(2)" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
+                    <label class="onoffswitch-label" for="myonoffswitch2">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </li>
+                <li class="onoffswitch" > Aircraft 3
+                    <input onclick="togglePath(3)" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked>
+                    <label class="onoffswitch-label" for="myonoffswitch3">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </li>
+                <li class="onoffswitch" > Aircraft 4
+                    <input onclick="togglePath(4)" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch4" checked>
+                    <label class="onoffswitch-label" for="myonoffswitch4">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </li>
             </ul>
         </li>
-        <li>
-            <a href="#" >Clear Plane Paths</a>
+        <li id="cp">
+            <a>Clear Plane Paths</a>
             <ul class="second-level-menu">
-                <li><a href="#" onclick="clearPath(1)">Aircraft 1</a></li>
-                <li><a href="#" onclick="clearPath(2)">Aircraft 2</a></li>
-                <li><a href="#" onclick="clearPath(3)">Aircraft 3</a></li>
-                <li><a href="#" onclick="clearPath(4)">Aircraft 4</a></li>
+                <li><a onclick="clearPath(1)">Aircraft 1</a></li>
+                <li><a onclick="clearPath(2)">Aircraft 2</a></li>
+                <li><a onclick="clearPath(3)">Aircraft 3</a></li>
+                <li><a onclick="clearPath(4)">Aircraft 4</a></li>
             </ul>
         </li>
     </ul>
 </div>
+<script>
+    var on = false;
+    var overhead = document.getElementById("overhead");
+    var text = document.getElementById("overheadText");
+    document.getElementById("overhead").onclick=function(){
+        on = !on;
+        if(on){
+            overhead.style.backgroundColor = "#cccccc";
+            text.style.color = "#000000";
+        }
+        else {
+            overhead.style.backgroundColor = "#b3b3b3";
+            text.style.color = "#FFFFFF";
+        }
+    }
+    document.getElementById("a1pv").onclick=function(){
+        overhead.style.backgroundColor = "#b3b3b3";
+        text.style.color = "#FFFFFF";
+        on = false;
+    }
+    document.getElementById("a2pv").onclick=function(){
+        overhead.style.backgroundColor = "#b3b3b3";
+        text.style.color = "#FFFFFF";
+        on = false;
+    }
+    document.getElementById("a3pv").onclick=function(){
+        overhead.style.backgroundColor = "#b3b3b3";
+        text.style.color = "#FFFFFF";
+        on = false;
+    }
+    document.getElementById("a4pv").onclick=function(){
+        overhead.style.backgroundColor = "#b3b3b3";
+        text.style.color = "#FFFFFF";
+        on = false;
+    }
+
+</script>
 </body>
 </html>
 
