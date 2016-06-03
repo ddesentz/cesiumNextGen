@@ -14,96 +14,75 @@ html, body, #cesiumContainer {
     width: 100%;
     border-radius: 5px;
 }
-.controlPanel li:target {
-    background-color: #d9d9d9
-}
-.controlPanel li:target a{
-            color: #000000
-}
-.third-level-menu
-{
-    right: -100px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: none;
-    content: '';
-    position: absolute;
-    top: -5px;
-    height: 100%;
-    width: 100px;
-}
-.third-level-menu > li
-{
+
+/* You can declare things about multiple html elements at a time. Here I'm saying, the enclosed CSS applies to
+ * both the top-level-menu itself and everything inside it. */
+.top-level-menu, .top-level-menu * {
+    /* This is what's known as a CSS reset. Taking all of the annoying or nonsensical browser defaults out
+     * of the equation and replacing them with something predictable and sane. */
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    display: block;
+    z-index: 0;
     text-align: center;
+    font: bold 14px Arial, Helvetica, sans-serif;
+    color: inherit;
+    text-decoration: none;
+    line-height: 30px;
+}
+
+.top-level-menu li {
     border: 2px solid #444444;
     box-shadow: 5px 5px 5px #444444;
     background: #b3b3b3;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
 }
-.third-level-menu > li:hover { background: #cccccc;}
+
+.top-level-menu ul {
+    position: absolute;
+    top: 0px;
+    left: 100%;
+    display: none;
+}
+
+.top-level-menu a {
+    padding: 2.5px;
+}
+
+.top-level-menu li:hover {
+    background: #ccc;
+    color: #000;
+    z-index: 1; /* Otherwise the drop shadow from other <li>s overlaps the submenu */
+    box-shadow: none; /* otherwise our drop shadow will overlap our siblings */
+}
+
+.top-level-menu li:target {
+    background-color: #d9d9d9;
+    color: #000000;
+}
+
+.third-level-menu
+{
+    width: 100px;
+}
 
 .second-level-menu
 {
-    position: absolute;
-    top: 5px;
-    right: -85px;
     width: 150px;
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: none;
 }
-
-.second-level-menu > li
-{
-    position: relative;
-    text-align: center;
-    margin-left: 65px;
-    border: 2px solid #444444;
-    box-shadow: 5px 5px 5px #444444;
-    background: #b3b3b3;
-}
-.second-level-menu > li:hover { background: #cccccc; }
 
 .top-level-menu
 {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
     width: 150px;
-    float: left;
 }
-
-.top-level-menu > li
-{
-    position: relative;
-    text-align: center;
-    border: 2px solid #444444;
-    box-shadow: 5px 5px 5px #444444;
-    background: #b3b3b3;
-}
-.top-level-menu > li:hover { background: #cccccc; cursor: pointer; }
 
 .top-level-menu li:hover > ul
 {
     display: inline;
 }
-
-.top-level-menu a
-{
-    font: bold 14px Arial, Helvetica, sans-serif;
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 2.5px;
-    display: block;
-    line-height: 30px;
-}
-.top-level-menu a:hover { color: #000000; }
 
 .onoffswitch {
     position: relative; width: 75px;
