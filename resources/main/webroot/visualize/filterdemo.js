@@ -18,7 +18,7 @@ colorArray.push(Cesium.Color.BLUE);
 colorArray.push(Cesium.Color.YELLOW);
 var pathCoords = [];
 var aircraftPaths = [];
-var viewAllCount = 0;
+var viewAllCount = false;
 
 function startEventBus(url) {
     var eb = new EventBus(url);
@@ -125,17 +125,14 @@ function randomColor() {
 
 function zoomTo(num){
     viewer.trackedEntity = vehicles[num-1];
-    if(viewAllCount%2==1){
-        viewAllCount++;
+    if(viewAllCount){
+        viewAllCount = !viewAllCount;
     }
 }
 
 function togglePath(num){
     var path = aircraftPaths[num-1];
-    if(path.show)
-        path.show = false;
-    else
-        path.show = true;
+    path.show = !path.show;
 }
 
 function clearPath(num) {
@@ -143,5 +140,5 @@ function clearPath(num) {
 }
 
 function viewAll(){
-    viewAllCount++;
+    viewAllCount = !viewAllCount
 }
