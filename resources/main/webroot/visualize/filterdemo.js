@@ -77,7 +77,7 @@ function createPlaneAt(pos, rot) {
 
     return viewer.entities.add({
         id: count,
-        position: INIT_POS,
+
         orientation: INIT_ROT,
         model: {
             uri: AIR_MODEL,
