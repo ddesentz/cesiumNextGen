@@ -135,7 +135,12 @@ class LCMVerticle(var dataURI: String) : DataSourceVerticle() {
     private fun rotateToCesium(Cnb: Matrix<Double>): Matrix<Double> {
         var out = dcmToRpy(Cnb.T)
         out[2] -= 90*PI/180
-        println(out)
+        log {
+            asYaml("Message content: NavSoln",
+                   "roll (deg)" to 180/PI*out[0],
+                   "pitch (deg)" to 180/PI*out[1],
+                   "yaw (deg)" to 180/PI*out[2])
+        }
         return out
     }
 
