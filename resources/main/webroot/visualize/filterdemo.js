@@ -59,7 +59,7 @@ function connectPlaneToBus(eb, plane, msgname) {
             }
             else {
                 newRot = message.body.rot;
-                updateOrientation(newRot, plane);
+                updateOrientation(newPos, newRot, plane);
             }
             updatePosition(newPos, plane);
             if(viewAllCount % 2 === 1){
@@ -91,8 +91,10 @@ function updatePosition(posLLH, vehicle) {
     aircraftPaths[vehicle.id - 1].polyline.positions = Cesium.Cartesian3.fromRadiansArrayHeights(updatePath(posLLH.longitude, posLLH.latitude, posLLH.height, vehicle.id - 1));
 }
 
-function updateOrientation(rotMat, vehicle) {
-    vehicle.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(INIT_POS, rotMat[2], rotMat[1], rotMat[0]));
+// Needs position for rotation base frame.
+function updateOrientation(posLLH, rotMat, vehicle) {
+    var posECEF = Cesium.Cartesian3.fromRadians(posLLH.longitude, posLLH.latitude, posLLH.height);
+    vehicle.orientation = new Cesium.ConstantProperty(Cesium.Transforms.headingPitchRollQuaternion(posECEF, rotMat[2], rotMat[1], rotMat[0]));
 }
 
 function updatePath(long, lat, height, id) {
