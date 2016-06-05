@@ -18,6 +18,7 @@ colorArray.push(Cesium.Color.BLUE);
 colorArray.push(Cesium.Color.YELLOW);
 var pathCoords = [];
 var aircraftPaths = [];
+var viewAllCount = false;
 
 function startEventBus(url) {
     var eb = new EventBus(url);
@@ -35,7 +36,6 @@ function startEventBus(url) {
                 }
                 aircraftPaths.push(createPath(colorArray[count - 1]));
                 pathCoords.push([]);
-                vehicles[vehicles.length - 1].position = INIT_POS;
                 connectPlaneToBus(eb, vehicles[vehicles.length - 1], topic);
                 viewer.trackedEntity = vehicles[vehicles.length - 1];
             });
@@ -54,14 +54,17 @@ function connectPlaneToBus(eb, plane, msgname) {
                 plane.model.uri = undefined;
                 plane.box = {
                     dimensions: new Cesium.Cartesian3(5.0, 5.0, 5.0),
-                    material: colorArray[count - 1]
+                    material: colorArray[plane.id - 1]
                 };
             }
-            else
+            else {
                 newRot = message.body.rot;
+                updateOrientation(newRot, plane);
+            }
             updatePosition(newPos, plane);
-            updateOrientation(newRot, plane);
-
+            if(viewAllCount % 2 === 1){
+                viewer.zoomTo(viewer.entities);
+            }
         } catch (e) {
             console.error("Received a pose from server that didnt have pos/vel/rot correctly formatted.");
             throw e;
@@ -73,7 +76,7 @@ function createPlaneAt(pos, rot) {
 
     return viewer.entities.add({
         id: count,
-        position: INIT_POS,
+
         orientation: INIT_ROT,
         model: {
             uri: AIR_MODEL,
@@ -117,4 +120,24 @@ function createPath(color) {
 
 function randomColor() {
     return new Cesium.Color(Math.random(), Math.random(), Math.random(), 1);
+}
+
+function zoomTo(num){
+    viewer.trackedEntity = vehicles[num-1];
+    if(viewAllCount){
+        viewAllCount = !viewAllCount;
+    }
+}
+
+function togglePath(num){
+    var path = aircraftPaths[num-1];
+    path.show = !path.show;
+}
+
+function clearPath(num) {
+    pathCoords[num-1] = [];
+}
+
+function viewAll(){
+    viewAllCount = !viewAllCount
 }

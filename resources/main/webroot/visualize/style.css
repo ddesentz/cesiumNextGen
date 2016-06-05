@@ -1,0 +1,141 @@
+@import url(../vendor/Cesium/Widgets/widgets.css);
+
+html, body, #cesiumContainer {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.controlPanel {
+    position: absolute;
+    top: 35%;
+    width: 100%;
+    border-radius: 5px;
+}
+
+/* You can declare things about multiple html elements at a time. Here I'm saying, the enclosed CSS applies to
+ * both the top-level-menu itself and everything inside it. */
+.top-level-menu, .top-level-menu * {
+    /* This is what's known as a CSS reset. Taking all of the annoying or nonsensical browser defaults out
+     * of the equation and replacing them with something predictable and sane. */
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    display: block;
+    z-index: 0;
+    text-align: center;
+    font: bold 14px Arial, Helvetica, sans-serif;
+    color: inherit;
+    text-decoration: none;
+    line-height: 30px;
+}
+
+.top-level-menu li {
+    border: 2px solid #444444;
+    box-shadow: 5px 5px 5px #444444;
+    background: #b3b3b3;
+    color: #fff;
+    position: relative;
+    cursor: pointer;
+}
+
+.top-level-menu ul {
+    position: absolute;
+    top: 0px;
+    left: 100%;
+    display: none;
+}
+
+.top-level-menu a {
+    padding: 2.5px;
+}
+
+.top-level-menu li:hover {
+    background: #ccc;
+    color: #000;
+    z-index: 1; /* Otherwise the drop shadow from other <li>s overlaps the submenu */
+    box-shadow: none; /* otherwise our drop shadow will overlap our siblings */
+}
+
+.top-level-menu li:target {
+    background-color: #d9d9d9;
+    color: #000000;
+}
+
+.third-level-menu
+{
+    width: 100px;
+}
+
+.second-level-menu
+{
+    width: 150px;
+}
+
+.top-level-menu
+{
+    width: 150px;
+}
+
+.top-level-menu li:hover > ul
+{
+    display: inline;
+}
+
+.onoffswitch {
+    position: relative; width: 75px;
+    -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+    font: bold 14px Arial, Helvetica, sans-serif;
+        color: #FFFFFF;
+        text-decoration: none;
+        padding: 2.5px;
+        display: block;
+        line-height: 30px;
+}
+.onoffswitch-checkbox {
+    display: none;
+}
+.onoffswitch-label {
+    display: block; overflow: hidden; cursor: pointer;
+    border: 2px solid #999999; border-radius: 20px;
+}
+
+.onoffswitch-inner {
+    display: block; width: 200%; margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+    display: block; float: left; width: 50%; height: 30px; padding: 0; line-height: 30px;
+    font-size: 12px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+    box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+    content: "ON";
+    padding-left: 0px;
+    padding-right: 30px;
+    background-color: #d9d9d9; color: #404040;
+
+}
+.onoffswitch-inner:after {
+    content: "OFF";
+    padding-right: 10px;
+    background-color: #404040; color: #999999;
+    text-align: right;
+}
+.onoffswitch-switch {
+    display: block; width: 20px; margin: 5px;height: 20px;margin-top: 38px;
+    background: #FFFFFF;
+    position: absolute; top: 0; bottom: 0;
+    right: 41px;
+    border: 2px solid #999999; border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 1px;
+    background-color: #404040;
+}
