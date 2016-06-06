@@ -50,28 +50,28 @@
         <li id="tp">
             <a>Toggle Plane Paths</a>
             <ul class="second-level-menu">
-                <li class="onoffswitch" > Aircraft 1
+                <li id="t1" class="onoffswitch" style="display:none;"> Aircraft 1
                     <input onclick="togglePath(1)" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch1" checked>
                     <label class="onoffswitch-label" for="myonoffswitch1">
                         <span class="onoffswitch-inner"></span>
                         <span class="onoffswitch-switch"></span>
                     </label>
                 </li>
-                <li class="onoffswitch" > Aircraft 2
+                <li id="t2" class="onoffswitch" style="display:none;"> Aircraft 2
                     <input onclick="togglePath(2)" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
                     <label class="onoffswitch-label" for="myonoffswitch2">
                         <span class="onoffswitch-inner"></span>
                         <span class="onoffswitch-switch"></span>
                     </label>
                 </li>
-                <li class="onoffswitch" > Aircraft 3
+                <li id="t3" class="onoffswitch" style="display:none;"> Aircraft 3
                     <input onclick="togglePath(3)" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch3" checked>
                     <label class="onoffswitch-label" for="myonoffswitch3">
                         <span class="onoffswitch-inner"></span>
                         <span class="onoffswitch-switch"></span>
                     </label>
                 </li>
-                <li class="onoffswitch" > Aircraft 4
+                <li id="t4" class="onoffswitch" style="display:none;"> Aircraft 4
                     <input onclick="togglePath(4)" type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch4" checked>
                     <label class="onoffswitch-label" for="myonoffswitch4">
                         <span class="onoffswitch-inner"></span>
@@ -83,10 +83,10 @@
         <li id="cp">
             <a>Clear Plane Paths</a>
             <ul class="second-level-menu">
-                <li><a onclick="clearPath(1)">Aircraft 1</a></li>
-                <li><a onclick="clearPath(2)">Aircraft 2</a></li>
-                <li><a onclick="clearPath(3)">Aircraft 3</a></li>
-                <li><a onclick="clearPath(4)">Aircraft 4</a></li>
+                <li id="c1" style="display:none;"><a onclick="clearPath(1)">Aircraft 1</a></li>
+                <li id="c2" style="display:none;"><a onclick="clearPath(2)">Aircraft 2</a></li>
+                <li id="c3" style="display:none;"><a onclick="clearPath(3)">Aircraft 3</a></li>
+                <li id="c4" style="display:none;"><a onclick="clearPath(4)">Aircraft 4</a></li>
             </ul>
         </li>
     </ul>
