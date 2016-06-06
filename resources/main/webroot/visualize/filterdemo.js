@@ -48,23 +48,33 @@ function connectPlaneToBus(eb, plane, msgname) {
     eb.registerHandler(msgname, function (error, message) {
         try {
             // Invert lon/lat to lat/lon
-            var newPos = new Cesium.Cartographic(message.body.pos[1], message.body.pos[0], message.body.pos[2]);
-            var newRot;
-            if (!message.body.rot) {
-                plane.model.uri = undefined;
-                plane.box = {
-                    dimensions: new Cesium.Cartesian3(5.0, 5.0, 5.0),
-                    material: colorArray[plane.id - 1]
-                };
+            if(message.body.pos){
+                var newPos = new Cesium.Cartographic(message.body.pos[1], message.body.pos[0], message.body.pos[2]);
+                var newRot;
+                    if (!message.body.rot) {
+                        plane.model.uri = undefined;
+                            plane.box = {
+                            dimensions: new Cesium.Cartesian3(5.0, 5.0, 5.0),
+                            material: colorArray[plane.id - 1]
+                            };
+                        }
+                    else {
+                        newRot = message.body.rot;
+                        updateOrientation(newPos, newRot, plane);
+                    }
+                    updatePosition(newPos, plane);
+
+                    if(viewAllCount){
+                        viewer.zoomTo(viewer.entities);
+                    }
+                    var planeExists = document.getElementById(plane.id);
+                            planeExists.style.display = "block";
             }
             else {
-                newRot = message.body.rot;
-                updateOrientation(newPos, newRot, plane);
+
             }
-            updatePosition(newPos, plane);
-            if(viewAllCount){
-                viewer.zoomTo(viewer.entities);
-            }
+
+
         } catch (e) {
             console.error("Received a pose from server that didnt have pos/vel/rot correctly formatted.");
             throw e;
