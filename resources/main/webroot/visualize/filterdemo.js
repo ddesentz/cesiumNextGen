@@ -74,11 +74,6 @@ function connectPlaneToBus(eb, plane, msgname) {
                     var planeExistsClear = document.getElementById("c"+plane.id);
                             planeExistsClear.style.display = "block";
             }
-            else {
-
-            }
-
-
         } catch (e) {
             console.error("Received a pose from server that didnt have pos/vel/rot correctly formatted.");
             throw e;
