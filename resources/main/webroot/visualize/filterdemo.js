@@ -18,7 +18,7 @@ colorArray.push(Cesium.Color.BLUE);
 colorArray.push(Cesium.Color.YELLOW);
 var pathCoords = [];
 var aircraftPaths = [];
-var viewAllCount = false;
+var viewAllCount = true;
 
 function startEventBus(url) {
     var eb = new EventBus(url);
@@ -62,7 +62,7 @@ function connectPlaneToBus(eb, plane, msgname) {
                 updateOrientation(newPos, newRot, plane);
             }
             updatePosition(newPos, plane);
-            if(viewAllCount % 2 === 1){
+            if(viewAllCount){
                 viewer.zoomTo(viewer.entities);
             }
         } catch (e) {
@@ -76,7 +76,6 @@ function createPlaneAt(pos, rot) {
 
     return viewer.entities.add({
         id: count,
-
         orientation: INIT_ROT,
         model: {
             uri: AIR_MODEL,
