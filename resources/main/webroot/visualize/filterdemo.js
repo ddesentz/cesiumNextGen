@@ -69,6 +69,10 @@ function connectPlaneToBus(eb, plane, msgname) {
                     }
                     var planeExists = document.getElementById(plane.id);
                             planeExists.style.display = "block";
+                    var planeExistsToggle = document.getElementById("t"+plane.id);
+                            planeExistsToggle.style.display = "block";
+                    var planeExistsClear = document.getElementById("c"+plane.id);
+                            planeExistsClear.style.display = "block";
             }
             else {
 
